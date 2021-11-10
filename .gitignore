@@ -3,3 +3,13 @@ node_modules
 dist
 dist-ssr
 *.local
+# node modules
+**/node_modules/
+
+# .idea
+**/.idea/
+
+# package lock
+**/package-lock.json
+
+**/admin/

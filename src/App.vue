@@ -1,6 +1,6 @@
 <template>
   <div>
-    这是后端管理界面
+    <router-view></router-view>
   </div>
 </template>
 

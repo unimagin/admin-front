@@ -3,6 +3,8 @@ import App from './App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import {ElLoading} from "element-plus";
+import Router from "./router"
+import Store from "./store"
 
 let loading;
 const isLoading = (show_text) => {
@@ -22,5 +24,5 @@ const app = createApp(App)
 app.config.productionTip = false
 app.config.globalProperties.$finishLoading = finishLoading
 app.config.globalProperties.$showLoading = isLoading
-app.use(ElementPlus).mount('#app')
+app.use(ElementPlus).use(Router).use(Store).mount('#app')
 

@@ -18,8 +18,8 @@
         </el-form-item>
         <el-form-item size="large">
           <el-button type="primary"
-                     icon="el-icon-upload"
                      @click="doLogin()">登 录
+            <el-icon class="el-icon--upload"></el-icon>
           </el-button>
         </el-form-item>
       </el-form>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { Upload } from '@element-plus/icons'
 
 export default {
   name: "login",
@@ -53,6 +54,9 @@ export default {
       },
     };
   },
+  components:[
+    Upload
+  ],
   methods: {
     doLogin() {
       this.$refs["loginForm"].validate(valid => {
@@ -197,5 +201,4 @@ a:hover {
   color: black;
   font-size: 16px;
 }
-
 </style>

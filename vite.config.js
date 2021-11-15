@@ -1,3 +1,6 @@
+import vue from '@rollup/plugin-node-resolve'
+
+
 module.exports = {
     outDir: "admin",
     port: '666',
@@ -20,5 +23,10 @@ module.exports = {
                 }
             }
         },
-    }
+    },
+    plugins: [
+        vue({
+            target: 'browser'
+        }),
+    ]
 }

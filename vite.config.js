@@ -1,32 +1,37 @@
-import vue from '@rollup/plugin-node-resolve'
+import {defineConfig} from "vite";  // 帮手函数，这样不用 jsdoc 注解也可以获取类型提示
+import vue from '@vitejs/plugin-vue';
 
-
-module.exports = {
-    outDir: "admin",
-    port: '666',
-    open: true,    // 打开浏览器
-    hot: true,     // 启动模块热更新
-    optimization: {
-        minimize: true,
+export default defineConfig({
+    plugins: [vue()], // 配置需要使用的插件列表，这里将vue添加进去
+    // 配置文件别名 vite1.0是/@/  2.0改为/@
+    // 这里是将src目录配置别名为 /@ 方便在项目中导入src目录下的文件
+    // 强制预构建插件包
+    optimizeDeps: {
+        include: ['axios'],
     },
-    dev: {
-        // Paths
-        assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
-        proxyTable: { // 代理配置信息
+    // 打包配置
+    build: {
+        target: 'modules',
+        outDir: 'admin', //指定输出路径
+        assetsDir: 'assets', // 指定生成静态资源的存放路径
+        minify: 'terser', // 混淆器，terser构建后文件体积更小
+        publicPath: '/'
+    },
+    // 本地运行配置，及反向代理配置
+    server: {
+        port: 3001,
+        cors: true, // 默认启用并允许任何源
+        open: true, // 在服务器启动时自动在浏览器中打开应用程序
+        //反向代理配置，注意rewrite写法，开始没看文档在这里踩了坑http://82.156.168.246:8080
+        proxy: {
             '/api': {
                 target: 'http://82.156.168.246:8080',   //代理接口
                 // target: 'http://localhost:8080',
-                changeOrigin: true, // 如果设置为true,那么本地会虚拟一个服务器接收你的请求并代你发送该请求，这样就不会有跨域问题（只适合开发环境）
-                pathRewrite: {
-                    '^\/api': '' // 重写路径
-                }
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, ""),
             }
-        },
-    },
-    plugins: [
-        vue({
-            target: 'browser'
-        }),
-    ]
-}
+        }
+    }
+})
+
+

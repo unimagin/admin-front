@@ -1,0 +1,44 @@
+# deploy.yml
+name: deploy blog to tengxunyun
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 切换分支
+      - name: Checkout
+        uses: actions/checkout@master
+      # 下载 git submodule
+      - uses: srt32/git-actions@v0.0.3
+        with:
+          args: git submodule update --init --recursive
+      # 使用 node:10
+      - name: use Node.js 15
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
+      # npm install
+      - name: npm install
+        run: |
+          npm install 
+        env:
+          CI: true
+      # build
+      - name: npm build
+        run: |
+          npm run build
+        env:
+          CI: true
+
+      # Deploy
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        with:  
+          username: 'nkcs'   #ssh user name
+          server: '${{ secrets.REMOTE_HOST }}' #引用之前创建好的secret
+          ssh_private_key: ${{ secrets.ACCESS_TOKEN }} #引用之前创建好的secret
+          local_path: './admin'  # 对应我们项目build的文件夹路径
+          remote_path: '/usr/share/nginx'

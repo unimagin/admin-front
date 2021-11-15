@@ -1,6 +1,11 @@
 module.exports = {
-    port: 666,
     outDir: "admin",
+    port: '666',
+    open: true,    // 打开浏览器
+    hot: true,     // 启动模块热更新
+    optimization: {
+        minimize: true,
+    },
     dev: {
         // Paths
         assetsSubDirectory: 'static',

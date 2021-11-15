@@ -1,6 +1,6 @@
 import {createWebHashHistory, createRouter} from 'vue-router';
 import Login from '../components/Login.vue'
-import AdminMain from "../components/admin/main.vue"
+import Main from "../components/admin/main.vue"
 import overallSituation from "../components/admin/overall-situation.vue"
 import parkSituation from "../components/admin/park-situation.vue"
 import userManager from "../components/admin/user-manage.vue"
@@ -18,7 +18,7 @@ const routes = [
     },
     {
         path: '/admin',
-        component: AdminMain,
+        component: Main,
         redirect: '/admin/overallSituation',
         children:[
             {

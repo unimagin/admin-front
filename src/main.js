@@ -3,7 +3,7 @@ import App from './App.vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import {ElLoading} from "element-plus";
-import Router from "./router"
+import Router from "./router/index.js"
 import Store from "./store"
 
 let loading;

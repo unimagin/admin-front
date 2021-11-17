@@ -1,11 +1,12 @@
 import {createWebHashHistory, createRouter} from 'vue-router';
-import Login from '../components/Login.vue'
-import MainIndex from "../components/admin/main-index.vue"
-import overallSituation from "../components/admin/overall-situation.vue"
-import parkSituation from "../components/admin/park-situation.vue"
-import userManager from "../components/admin/user-manage.vue"
-import userSituation from "../components/admin/user-situation.vue"
-import parkManager from "../components/admin/park-manage.vue"
+
+const Login = () => import  ( "../components/Login.vue")
+const MainIndex = () => import  ( "../components/admin/main-index.vue")
+const overallSituation = () => import  ( "../components/admin/overall-situation.vue")
+const parkSituation = () => import  ( "../components/admin/park-situation.vue")
+const userManager = () => import  ( "../components/admin/user-manage.vue")
+const userSituation = () => import  ( "../components/admin/user-situation.vue")
+const parkManager = () => import  ( "../components/admin/park-manage.vue")
 
 const routes = [
     {
@@ -51,15 +52,16 @@ const router = new createRouter({
     routes
 });
 router.beforeEach((to, from, next) => {
-    if (to.path.startsWith("/admin")) {
-        if (localStorage.getItem("token")) {
-            next();
+        if (to.path.startsWith("/admin")) {
+            if (localStorage.getItem("token")) {
+                next();
+            } else {
+                alert("请先登录！！");
+                return next("/login");
+            }
         } else {
-            alert("请先登录！！");
-            return next("/login");
+            next();
         }
-    } else {
-        next();
     }
-})
+)
 export default router

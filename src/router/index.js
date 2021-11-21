@@ -1,12 +1,12 @@
 import {createWebHashHistory, createRouter} from 'vue-router';
 
 const Login = () => import  ( "../components/Login.vue")
-const MainIndex = () => import  ( "../components/admin/main-index.vue")
-const overallSituation = () => import  ( "../components/admin/overall-situation.vue")
-const parkSituation = () => import  ( "../components/admin/park-situation.vue")
-const userManager = () => import  ( "../components/admin/user-manage.vue")
-const userSituation = () => import  ( "../components/admin/user-situation.vue")
-const parkManager = () => import  ( "../components/admin/park-manage.vue")
+const MainIndex = () => import  ( "../components/administrator/main-index.vue")
+const overallSituation = () => import  ( "../components/administrator/overall-situation.vue")
+const parkSituation = () => import  ( "../components/administrator/park-situation.vue")
+const userManager = () => import  ( "../components/administrator/user-manage.vue")
+const userSituation = () => import  ( "../components/administrator/user-situation.vue")
+const parkManager = () => import  ( "../components/administrator/park-manage.vue")
 
 const routes = [
     {

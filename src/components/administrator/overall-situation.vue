@@ -11,14 +11,28 @@ export default {
       var option = {
         backgroundColor: '#080b30',
         title: {
-          text: '网站访问量',
+          text: '网站整体情况',
           textStyle: {
             align: 'center',
             color: '#fff',
             fontSize: 30,
           },
-          top: '5%',
+          top: '4%',
           left: 'center',
+        },
+        legend:{
+          type: 'plain',
+          show: 'true',
+          bottom: "3%",
+          itemGap: 50,
+          textStyle: {
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Microsoft YaHei',
+            fontSize: 15
+
+          }
+
         },
         tooltip: {
           trigger: 'axis',

@@ -52,6 +52,15 @@ export default {
           formatter: '{a0}: {c0}<br />{a1}: {c1}',
 
         },
+        toolbox: {
+          show: true,
+          feature: {
+            mark: { show: true },
+            dataView: { show: true, readOnly: false },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
         legend: {
           bottom: "2%",
           itemGap: 20,

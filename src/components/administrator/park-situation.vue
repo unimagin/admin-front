@@ -14,21 +14,32 @@ export default {
       var lineData = [];
       var barData = [];
 
+      var baseDate = +new Date(dottedBase -= 1000*3600*24*20)
       for (var i = 0; i < 20; i++) {
-        var date = new Date(dottedBase += 1000 * 3600 * 24);
+        var date = new Date(baseDate += 1000 * 3600 * 24);
         category.push([
           date.getFullYear(),
           date.getMonth() + 1,
           date.getDate()
         ].join('-'));
-        var b = Math.random() * 200;
-        var d = Math.random() * 200;
+        var b = Math.round(Math.random() * 200);
+        var d = Math.round(Math.random() * 200);
         barData.push(b)
         lineData.push(d + b);
       }
 
       var option = {
-        backgroundColor: '#0f375f',
+        backgroundColor: '#080b30',
+        title: {
+          text: '近20天车位使用情况',
+          textStyle: {
+            align: 'center',
+            color: '#fff',
+            fontSize: 30,
+          },
+          top: '3%',
+          left: 'center',
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -37,12 +48,17 @@ export default {
               show: true,
               backgroundColor: '#333'
             }
-          }
+          },
+          formatter: '{a0}: {c0}<br />{a1}: {c1}',
+
         },
         legend: {
-          data: ['line', 'bar'],
+          bottom: "2%",
+          itemGap: 20,
+          data: ['总预约量', '实际使用量'],
           textStyle: {
-            color: '#ccc'
+            color: '#ccc',
+            fontSize: 15
           }
         },
         xAxis: {
@@ -61,16 +77,16 @@ export default {
             }
           }
         },
-        series: [{
-          name: 'line',
+        series: [{//所有圆圈
+          name: '总预约量',
           type: 'line',
           smooth: true,
           showAllSymbol: true,
           symbol: 'emptyCircle',
           symbolSize: 15,
           data: lineData
-        }, {
-          name: 'bar',
+        }, {//最前方矮柱状图
+          name: '实际使用量',
           type: 'bar',
           barWidth: 10,
           itemStyle: {
@@ -86,40 +102,42 @@ export default {
             }
           },
           data: barData
-        }, {
-          name: 'line',
-          type: 'bar',
-          barGap: '-100%',
-          barWidth: 10,
-          itemStyle: {
-            normal: {
-              color: new this.$echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    {offset: 0, color: 'rgba(20,200,212,0.5)'},
-                    {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
-                    {offset: 1, color: 'rgba(20,200,212,0)'}
-                  ]
-              )
-            }
+        },
+          {//背后柱状图
+            name: 'line',
+            type: 'bar',
+            barGap: '-100%',
+            barWidth: 10,
+            itemStyle: {
+              normal: {
+                color: new this.$echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                      {offset: 0, color: 'rgba(20,200,212,0.5)'},
+                      {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+                      {offset: 1, color: 'rgba(20,200,212,0)'}
+                    ]
+                )
+              }
+            },
+            z: -12,
+            data: lineData
           },
-          z: -12,
-          data: lineData
-        }, {
-          name: 'dotted',
-          type: 'pictorialBar',
-          symbol: 'rect',
-          itemStyle: {
-            normal: {
-              color: '#0f375f'
-            }
-          },
-          symbolRepeat: true,
-          symbolSize: [12, 4],
-          symbolMargin: 1,
-          z: -10,
-          data: lineData
-        }]
+          { //虚线条状图
+            name: 'dotted',
+            type: 'pictorialBar',
+            symbol: 'rect',
+            itemStyle: {
+              normal: {
+                color: '#0f375f'
+              }
+            },
+            symbolRepeat: true,
+            symbolSize: [12, 4],
+            symbolMargin: 1,
+            z: -10,
+            data: lineData
+          }]
       };
       myChart.setOption(option);
     }

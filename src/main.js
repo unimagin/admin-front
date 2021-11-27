@@ -5,6 +5,10 @@ import 'element-plus/dist/index.css'
 import {ElLoading} from "element-plus";
 import Router from "./router/index.js"
 import Store from "./store"
+import * as echarts from 'echarts'
+
+
+
 
 let loading;
 const isLoading = (show_text) => {
@@ -24,5 +28,6 @@ const app = createApp(App)
 app.config.productionTip = false
 app.config.globalProperties.$finishLoading = finishLoading
 app.config.globalProperties.$showLoading = isLoading
+app.config.globalProperties.$echarts = echarts
 app.use(ElementPlus).use(Router).use(Store).mount('#app')
 

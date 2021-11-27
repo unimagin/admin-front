@@ -139,7 +139,7 @@ export default {
           },
           areaStyle: {
             normal: {
-              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+              color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
                 color: 'rgba(108,80,243,0.3)'
               },
@@ -193,7 +193,7 @@ export default {
             },
             areaStyle: {
               normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                   offset: 0,
                   color: 'rgba(0,202,149,0.3)'
                 },

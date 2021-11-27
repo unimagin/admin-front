@@ -2,7 +2,7 @@
   <div>
     这是整体界面
   </div>
-  <div id="overall-situation-echarts" style="width: 600px;height: 400px;"></div>
+  <div id="overall-situation-echarts" style="width: 600px;height: 400px;">abc</div>
 </template>
 
 <script src="src/assets/echarts.min.js">

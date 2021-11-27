@@ -1,5 +1,5 @@
 <template>
-  <div id="overall-situation-echarts" style="width: 600px;height: 400px;"></div>
+  <div id="overall-situation-echarts" style="width: 801px;height: 534px;"></div>
 </template>
 
 <script>

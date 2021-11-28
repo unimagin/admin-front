@@ -14,27 +14,23 @@ export default {
       var lineData = [];
       var barData = [];
 
-      var baseDate = +new Date(dottedBase -= 1000*3600*24*20)
+      var baseDate = +new Date((dottedBase -= 1000 * 3600 * 24 * 20));
       for (var i = 0; i < 20; i++) {
-        var date = new Date(baseDate += 1000 * 3600 * 24);
-        category.push([
-          date.getFullYear(),
-          date.getMonth() + 1,
-          date.getDate()
-        ].join('-'));
+        var date = new Date((baseDate += 1000 * 3600 * 24));
+        category.push([date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'));
         var b = Math.round(Math.random() * 200);
         var d = Math.round(Math.random() * 200);
-        barData.push(b)
+        barData.push(b);
         lineData.push(d + b);
       }
 
       var option = {
-        backgroundColor: '#080b30',
+        backgroundColor: '#fff',
         title: {
           text: '近20天车位使用情况',
           textStyle: {
             align: 'center',
-            color: '#fff',
+            color: '#000',
             fontSize: 30,
           },
           top: '3%',
@@ -46,7 +42,7 @@ export default {
             type: 'shadow',
             label: {
               show: true,
-              backgroundColor: '#333'
+              backgroundColor: '#000'
             }
           },
           formatter: '{a0}: {c0}<br />{a1}: {c1}',
@@ -66,7 +62,7 @@ export default {
           itemGap: 20,
           data: ['总预约量', '实际使用量'],
           textStyle: {
-            color: '#ccc',
+            color: '#000',
             fontSize: 15
           }
         },
@@ -74,7 +70,7 @@ export default {
           data: category,
           axisLine: {
             lineStyle: {
-              color: '#ccc'
+              color: '#000'
             }
           }
         },
@@ -82,7 +78,7 @@ export default {
           splitLine: {show: false},
           axisLine: {
             lineStyle: {
-              color: '#ccc'
+              color: '#000'
             }
           }
         },
@@ -132,21 +128,22 @@ export default {
             z: -12,
             data: lineData
           },
-          { //虚线条状图
-            name: 'dotted',
-            type: 'pictorialBar',
-            symbol: 'rect',
-            itemStyle: {
-              normal: {
-                color: '#0f375f'
-              }
-            },
-            symbolRepeat: true,
-            symbolSize: [12, 4],
-            symbolMargin: 1,
-            z: -10,
-            data: lineData
-          }]
+          //   { //虚线条状图
+          //     name: 'dotted',
+          //     type: 'pictorialBar',
+          //     symbol: 'rect',
+          //     itemStyle: {
+          //       normal: {
+          //         color: '#0f375f'
+          //       }
+          //     },
+          //     symbolRepeat: true,
+          //     symbolSize: [12, 4],
+          //     symbolMargin: 1,
+          //     z: -10,
+          //     data: lineData
+          //   }
+        ]
       };
       myChart.setOption(option);
     }

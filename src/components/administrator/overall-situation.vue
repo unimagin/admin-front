@@ -9,12 +9,12 @@ export default {
     myEcharts() {
       var myChart = this.$echarts.init(document.getElementById('overall-situation-echarts'));
       var option = {
-        backgroundColor: '#080b30',
+        backgroundColor: '#fff',
         title: {
           text: '网站整体情况',
           textStyle: {
             align: 'center',
-            color: '#fff',
+            color: '#000',
             fontSize: 30,
           },
           top: '4%',
@@ -26,7 +26,7 @@ export default {
           bottom: "3%",
           itemGap: 50,
           textStyle: {
-            color: '#fff',
+            color: '#000',
             fontWeight: 'bold',
             fontFamily: 'Microsoft YaHei',
             fontSize: 15
@@ -53,22 +53,18 @@ export default {
                 y: 0,
                 x2: 0,
                 y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: 'rgba(0, 255, 233,0)',
-                  },
-                  {
-                    offset: 0.5,
-                    color: 'rgba(255, 255, 255,1)',
-                  },
-                  {
-                    offset: 1,
-                    color: 'rgba(0, 255, 233,0)',
-                  },
-                ],
-                global: false,
-              },
+                colorStops: [{
+                  offset: 0,
+                  color: 'rgba(0, 0,0,0)'
+                }, {
+                  offset: 0.5,
+                  color: 'rgba(0, 0, 0,1)',
+                }, {
+                  offset: 1,
+                  color: 'rgba(0, 0, 0,0)'
+                }],
+                global: false
+              }
             },
           },
         },
@@ -83,17 +79,17 @@ export default {
           {
             type: 'category',
             axisLine: {
-              show: true,
+              show: true
             },
             splitArea: {
               // show: true,
-              color: '#f00',
+              color: '#000',
               lineStyle: {
-                color: '#f00',
+                color: '#000'
               },
             },
             axisLabel: {
-              color: '#fff',
+              color: '#000'
             },
             splitLine: {
               show: false,
@@ -112,8 +108,8 @@ export default {
             splitLine: {
               show: true,
               lineStyle: {
-                color: 'rgba(255,255,255,0.2)',
-              },
+                color: 'rgba(0,0,0,0.1)'
+              }
             },
             axisLine: {
               show: false,
@@ -122,7 +118,8 @@ export default {
               show: false,
               margin: 20,
               textStyle: {
-                color: '#d1e6eb',
+                color: '#000',
+
               },
             },
             axisTick: {

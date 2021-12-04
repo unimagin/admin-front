@@ -1,12 +1,21 @@
 <template>
-  <div id="user-situation-echarts" style="width: 801px;height: 534px;"></div>
+  <div id="user-situation-echarts" style="width: 801px; height: 534px"></div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "user-situation",
-  methods:{
-    myEcharts(){
+  data () {
+    return {
+      normal: 0,
+      vip: 0,
+      contract: 0,
+      tmp: 0
+    }
+  },
+  methods: {
+    myEcharts () {
       var myChart = this.$echarts.init(document.getElementById('user-situation-echarts'));
 
       var option = {
@@ -48,10 +57,10 @@ export default {
               borderRadius: 8
             },
             data: [
-              { value: 500, name: '签约用户' },
-              { value: 300, name: '集体用户' },
-              { value: 400, name: '个人用户' },
-              { value: 100, name: '临时用户' }
+              { value: this.contract, name: '签约用户' },
+              { value: this.vip, name: '会员' },
+              { value: this.normal, name: '普通用户' },
+              { value: this.tmp, name: '临时用户' }
             ]
           }
         ]
@@ -60,12 +69,21 @@ export default {
       myChart.setOption(option);
     }
   },
-  mounted() {
-    this.myEcharts();
-  }
+  mounted () {
+    axios.get('/api/data/user_kind')
+      .then(resp => {
+        this.normal = resp.data.normal
+        this.vip = resp.data.vip
+        this.contract = resp.data.contract
+        this.tmp = resp.data.tmp
+        this.myEcharts();
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
 }
 </script>
 
 <style scoped>
-
 </style>

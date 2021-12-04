@@ -3,11 +3,12 @@
     <el-container>
       <el-aside>
         <el-menu
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            router>
-          <el-sub-menu>
+          class="el-menu-vertical-demo"
+          @open="handleOpen"
+          @close="handleClose"
+          router
+        >
+          <el-sub-menu index="1">
             <template #title>
               <!--            <el-icon>
                             <location/>
@@ -17,7 +18,7 @@
             <el-menu-item index="overallSituation">整体情况查询</el-menu-item>
             <el-menu-item index="userSituation">用户情况查询</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu>
+          <el-sub-menu index="2">
             <template #title>
               <!--            <el-icon>
                             <location/>
@@ -40,7 +41,7 @@
 <script>
 export default {
   name: "main.vue",
-  setup() {
+  setup () {
     const handleOpen = (key, keyPath) => {
       console.log(key, keyPath)
     }
@@ -56,5 +57,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

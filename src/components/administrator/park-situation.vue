@@ -1,28 +1,24 @@
 <template>
-  <div id="park-situation-echarts" style="width: 801px;height: 534px;"></div>
+  <div id="park-situation-echarts" style="width: 801px; height: 534px"></div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "park-situation",
-  methods:{
-    myEcharts(){
+  data () {
+    return {
+      category: [],
+      lineData: [],
+      barData: [],
+      dottedBase: new Date()
+    }
+  },
+  methods: {
+    myEcharts () {
       var myChart = this.$echarts.init(document.getElementById('park-situation-echarts'));
       // Generate data
-      var category = [];
-      var dottedBase = +new Date();
-      var lineData = [];
-      var barData = [];
-
-      var baseDate = +new Date((dottedBase -= 1000 * 3600 * 24 * 20));
-      for (var i = 0; i < 20; i++) {
-        var date = new Date((baseDate += 1000 * 3600 * 24));
-        category.push([date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'));
-        var b = Math.round(Math.random() * 200);
-        var d = Math.round(Math.random() * 200);
-        barData.push(b);
-        lineData.push(d + b);
-      }
 
       var option = {
         backgroundColor: '#fff',
@@ -67,7 +63,7 @@ export default {
           }
         },
         xAxis: {
-          data: category,
+          data: this.category,
           axisLine: {
             lineStyle: {
               color: '#000'
@@ -75,7 +71,7 @@ export default {
           }
         },
         yAxis: {
-          splitLine: {show: false},
+          splitLine: { show: false },
           axisLine: {
             lineStyle: {
               color: '#000'
@@ -89,7 +85,7 @@ export default {
           showAllSymbol: true,
           symbol: 'emptyCircle',
           symbolSize: 15,
-          data: lineData
+          data: this.lineData
         }, {//最前方矮柱状图
           name: '实际使用量',
           type: 'bar',
@@ -98,36 +94,36 @@ export default {
             normal: {
               barBorderRadius: 5,
               color: new this.$echarts.graphic.LinearGradient(
-                  0, 0, 0, 1,
-                  [
-                    {offset: 0, color: '#14c8d4'},
-                    {offset: 1, color: '#43eec6'}
-                  ]
+                0, 0, 0, 1,
+                [
+                  { offset: 0, color: '#14c8d4' },
+                  { offset: 1, color: '#43eec6' }
+                ]
               )
             }
           },
-          data: barData
+          data: this.barData
         },
-          {//背后柱状图
-            name: 'line',
-            type: 'bar',
-            barGap: '-100%',
-            barWidth: 10,
-            itemStyle: {
-              normal: {
-                color: new this.$echarts.graphic.LinearGradient(
-                    0, 0, 0, 1,
-                    [
-                      {offset: 0, color: 'rgba(20,200,212,0.5)'},
-                      {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
-                      {offset: 1, color: 'rgba(20,200,212,0)'}
-                    ]
-                )
-              }
-            },
-            z: -12,
-            data: lineData
+        {//背后柱状图
+          name: 'line',
+          type: 'bar',
+          barGap: '-100%',
+          barWidth: 10,
+          itemStyle: {
+            normal: {
+              color: new this.$echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                  { offset: 0, color: 'rgba(20,200,212,0.5)' },
+                  { offset: 0.2, color: 'rgba(20,200,212,0.2)' },
+                  { offset: 1, color: 'rgba(20,200,212,0)' }
+                ]
+              )
+            }
           },
+          z: -12,
+          data: this.lineData
+        },
           //   { //虚线条状图
           //     name: 'dotted',
           //     type: 'pictorialBar',
@@ -148,12 +144,25 @@ export default {
       myChart.setOption(option);
     }
   },
-  mounted() {
-    this.myEcharts();
+  mounted () {
+    var baseDate = +new Date((this.dottedBase -= 1000 * 3600 * 24 * 20));
+    for (var i = 0; i < 20; i++) {
+      var date = new Date((baseDate += 1000 * 3600 * 24));
+      date = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+      this.category.push(date);
+    }
+    axios.post('/api/data/bill_data', { category: this.category })
+      .then(resp => {
+        this.barData = resp.data.reals;
+        this.lineData = resp.data.totals;
+        this.myEcharts();
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>
 
 <style scoped>
-
 </style>

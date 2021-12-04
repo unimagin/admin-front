@@ -7,7 +7,7 @@ import axios from 'axios'
 
 export default {
   name: "park-situation",
-  data () {
+  data() {
     return {
       category: [],
       lineData: [],
@@ -16,7 +16,7 @@ export default {
     }
   },
   methods: {
-    myEcharts () {
+    myEcharts() {
       var myChart = this.$echarts.init(document.getElementById('park-situation-echarts'));
       // Generate data
 
@@ -47,10 +47,10 @@ export default {
         toolbox: {
           show: true,
           feature: {
-            mark: { show: true },
-            dataView: { show: true, readOnly: false },
-            restore: { show: true },
-            saveAsImage: { show: true }
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            restore: {show: true},
+            saveAsImage: {show: true}
           }
         },
         legend: {
@@ -71,7 +71,7 @@ export default {
           }
         },
         yAxis: {
-          splitLine: { show: false },
+          splitLine: {show: false},
           axisLine: {
             lineStyle: {
               color: '#000'
@@ -94,36 +94,36 @@ export default {
             normal: {
               barBorderRadius: 5,
               color: new this.$echarts.graphic.LinearGradient(
-                0, 0, 0, 1,
-                [
-                  { offset: 0, color: '#14c8d4' },
-                  { offset: 1, color: '#43eec6' }
-                ]
+                  0, 0, 0, 1,
+                  [
+                    {offset: 0, color: '#14c8d4'},
+                    {offset: 1, color: '#43eec6'}
+                  ]
               )
             }
           },
           data: this.barData
         },
-        {//背后柱状图
-          name: 'line',
-          type: 'bar',
-          barGap: '-100%',
-          barWidth: 10,
-          itemStyle: {
-            normal: {
-              color: new this.$echarts.graphic.LinearGradient(
-                0, 0, 0, 1,
-                [
-                  { offset: 0, color: 'rgba(20,200,212,0.5)' },
-                  { offset: 0.2, color: 'rgba(20,200,212,0.2)' },
-                  { offset: 1, color: 'rgba(20,200,212,0)' }
-                ]
-              )
-            }
+          {//背后柱状图
+            name: 'line',
+            type: 'bar',
+            barGap: '-100%',
+            barWidth: 10,
+            itemStyle: {
+              normal: {
+                color: new this.$echarts.graphic.LinearGradient(
+                    0, 0, 0, 1,
+                    [
+                      {offset: 0, color: 'rgba(20,200,212,0.5)'},
+                      {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+                      {offset: 1, color: 'rgba(20,200,212,0)'}
+                    ]
+                )
+              }
+            },
+            z: -12,
+            data: this.lineData
           },
-          z: -12,
-          data: this.lineData
-        },
           //   { //虚线条状图
           //     name: 'dotted',
           //     type: 'pictorialBar',
@@ -144,22 +144,25 @@ export default {
       myChart.setOption(option);
     }
   },
-  mounted () {
+  created() {
+    this.$showLoading("正在拼命加载")
     var baseDate = +new Date((this.dottedBase -= 1000 * 3600 * 24 * 20));
     for (var i = 0; i < 20; i++) {
       var date = new Date((baseDate += 1000 * 3600 * 24));
       date = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
       this.category.push(date);
     }
-    axios.post('/api/data/bill_data', { category: this.category })
-      .then(resp => {
-        this.barData = resp.data.reals;
-        this.lineData = resp.data.totals;
-        this.myEcharts();
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    axios.post('/api/data/bill_data', {category: this.category})
+        .then(resp => {
+          this.barData = resp.data.reals;
+          this.lineData = resp.data.totals;
+          this.myEcharts();
+          this.$finishLoading()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$finishLoading()
+        })
   }
 }
 </script>

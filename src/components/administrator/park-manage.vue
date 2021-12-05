@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      停车价格管理
-      <el-table :data="parkPrice" style="width: 100%">
+      <h1>停车价格管理</h1>
+      <el-table :data="parkPrice" style="width: 60%">
         <el-table-column label="类别" width="100" prop="label">
         </el-table-column>
         <el-table-column label="正常停车价格" width="180" prop="normalMoney">
@@ -19,8 +19,8 @@
       </el-table>
     </div>
     <div>
-      特殊用户管理
-      <el-table :data="userPrice" style="width: 100%">
+      <h1>特殊用户管理</h1>
+      <el-table :data="userPrice" style="width: 60%">
         <el-table-column label="类别" width="100" prop="label">
         </el-table-column>
         <el-table-column label="每月价格" width="180" prop="price">

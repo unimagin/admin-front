@@ -201,4 +201,9 @@ a:hover {
   color: black;
   font-size: 16px;
 }
+.el-button{
+   margin-left:80px;
+   margin-top: 30px;
+   padding-left: 34px ;
+}
 </style>

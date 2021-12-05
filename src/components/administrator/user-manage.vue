@@ -17,11 +17,11 @@
       <template #default="scope">{{ showKind(scope.row.kind) }}</template>
     </el-table-column>
   </el-table>
-  <div style="margin-top: 20px">
-    <el-button @click="toggleSelection">加入黑名单</el-button>
+  <div style="margin-top: 30px;display:flex;float:left;">
+    <el-button type="primary" icon="el-icon-edit"  @click="toggleSelection">加入黑名单</el-button>
   </div>
-  <div style="margin-top: 20px">
-    <el-button @click="moveBlackList">移除黑名单</el-button>
+  <div style="margin-top: 30px;display:flex;">
+    <el-button type="primary" icon="el-icon-delete" @click="moveBlackList" style="margin-left:40px;">移除黑名单</el-button>
   </div>
 </template>
 

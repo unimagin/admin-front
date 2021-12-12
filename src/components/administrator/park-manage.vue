@@ -97,8 +97,8 @@ export default {
       this.userDialog = true
     },
     changeParkPrice () {
-      this.parkForm.normalPrice = parseInt(this.parkForm.normalPrice)
-      this.parkForm.breakPrice = parseInt(this.parkForm.breakPrice)
+      this.parkForm.normalPrice = parseFloat(this.parkForm.normalPrice)
+      this.parkForm.breakPrice = parseFloat(this.parkForm.breakPrice)
       axios.post('/api/admin/change_price', { price: this.parkForm, kind: 'park' })
         .then(() => {
           ElMessage({
@@ -113,7 +113,7 @@ export default {
     }
     ,
     changeUserPrice () {
-      this.userForm.price = parseInt(this.userForm.price)
+      this.userForm.price = parseFloat(this.userForm.price)
       axios.post('/api/admin/change_price', { price: this.userForm, kind: 'user' })
         .then(() => {
           ElMessage({

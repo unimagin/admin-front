@@ -5,13 +5,16 @@
       <el-table :data="parkPrice" style="width: 60%">
         <el-table-column label="类别" width="100" prop="label">
         </el-table-column>
-        <el-table-column label="正常停车价格" width="180" prop="normalMoney">
+        <el-table-column label="正常停车价格" width="180" prop="normalPrice">
         </el-table-column>
-        <el-table-column label="超时停车价格" width="180" prop="breakMoney">
+        <el-table-column label="超时停车价格" width="180" prop="breakPrice">
         </el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button size="mini" @click="parkHandleEdit(scope.$index, scope.row)">
+            <el-button
+              size="mini"
+              @click="parkHandleEdit(scope.$index, scope.row)"
+            >
               编辑
             </el-button>
           </template>
@@ -27,7 +30,10 @@
         </el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button size="mini" @click="userHandleEdit(scope.$index, scope.row)">
+            <el-button
+              size="mini"
+              @click="userHandleEdit(scope.$index, scope.row)"
+            >
               编辑
             </el-button>
           </template>
@@ -35,29 +41,23 @@
       </el-table>
     </div>
     <el-dialog v-model="parkDialog" title="停车价格修改" width="30%" center>
-      <el-form
-          label-width="100px"
-          :model="parkForm"
-      >
+      <el-form label-width="100px" :model="parkForm">
         <el-form-item label="类别">
           <el-input v-model="parkForm.label" readonly></el-input>
         </el-form-item>
         <el-form-item label="正常停车价格">
-          <el-input v-model="parkForm.normalMoney"></el-input>
+          <el-input v-model="parkForm.normalPrice"></el-input>
         </el-form-item>
         <el-form-item label="超时停车价格">
-          <el-input v-model="parkForm.breakMoney"></el-input>
+          <el-input v-model="parkForm.breakPrice"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" @click="changeParkPrice">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
     <el-dialog v-model="userDialog" title="用户价格修改" width="30%" center>
-      <el-form
-          label-width="100px"
-          :model="userForm"
-      >
+      <el-form label-width="100px" :model="userForm">
         <el-form-item label="类别">
           <el-input v-model="userForm.label" readonly></el-input>
         </el-form-item>
@@ -65,7 +65,7 @@
           <el-input v-model="userForm.price"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" @click="changeUserPrice">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -73,37 +73,14 @@
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
+import axios from 'axios'
 export default {
   name: "park-manage",
-  data() {
+  data () {
     return {
-      parkPrice: [
-        {
-          label: '普通用户',
-          normalMoney: 5,
-          breakMoney: 10,
-        },
-        {
-          label: 'VIP',
-          normalMoney: 5,
-          breakMoney: 10,
-        },
-        {
-          label: '合同用户',
-          normalMoney: 5,
-          breakMoney: 10,
-        },
-      ],
-      userPrice: [
-        {
-          label: "VIP",
-          price: 120
-        },
-        {
-          label: "合同用户",
-          price: 110
-        }
-      ],
+      parkPrice: [],
+      userPrice: [],
       parkDialog: false,
       userDialog: false,
       parkForm: {},
@@ -111,18 +88,54 @@ export default {
     }
   },
   methods: {
-    parkHandleEdit(index, row) {
+    parkHandleEdit (index, row) {
       this.parkForm = row
       this.parkDialog = true
     },
-    userHandleEdit(index, row) {
+    userHandleEdit (index, row) {
       this.userForm = row;
       this.userDialog = true
+    },
+    changeParkPrice () {
+      this.parkForm.normalPrice = parseInt(this.parkForm.normalPrice)
+      this.parkForm.breakPrice = parseInt(this.parkForm.breakPrice)
+      axios.post('/api/admin/change_price', { price: this.parkForm, kind: 'park' })
+        .then(() => {
+          ElMessage({
+            message: "修改价格成功！",
+            type: "success",
+          });
+          this.parkDialog = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
+    ,
+    changeUserPrice () {
+      this.userForm.price = parseInt(this.userForm.price)
+      axios.post('/api/admin/change_price', { price: this.userForm, kind: 'user' })
+        .then(() => {
+          ElMessage({
+            message: "修改价格成功！",
+            type: "success",
+          });
+          this.userDialog = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+    axios.get('/api/admin/look_price')
+      .then(resp => {
+        this.parkPrice = resp.data.parkPrice;
+        this.userPrice = resp.data.userPrice
+      })
   }
 }
 </script>
 
 <style scoped>
-
 </style>

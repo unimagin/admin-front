@@ -1,12 +1,18 @@
 <template>
-  <div id="overall-situation-echarts" style="width: 801px;height: 534px;"></div>
+  <div id="overall-situation-echarts" style="width: 801px; height: 534px"></div>
 </template>
 
 <script>
 export default {
   name: "overall-situation",
+  data () {
+    return {
+      data: [],
+      dottedBase: new Date()
+    }
+  },
   methods: {
-    myEcharts() {
+    myEcharts () {
       var myChart = this.$echarts.init(document.getElementById('overall-situation-echarts'));
       var option = {
         backgroundColor: '#fff',
@@ -20,7 +26,7 @@ export default {
           top: '4%',
           left: 'center',
         },
-        legend:{
+        legend: {
           type: 'plain',
           show: 'true',
           bottom: "3%",
@@ -95,7 +101,7 @@ export default {
               show: false,
             },
             boundaryGap: false,
-            data: ['11.25', '11.26', '11.27', '11.28', '11.29', '11.30'],
+            data: this.data,
           },
         ],
 
@@ -166,27 +172,27 @@ export default {
             areaStyle: {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(
-                    0,
-                    0,
-                    0,
-                    1,
-                    [
-                      {
-                        offset: 0,
-                        color: 'rgba(108,80,243,0.3)',
-                      },
-                      {
-                        offset: 1,
-                        color: 'rgba(108,80,243,0)',
-                      },
-                    ],
-                    false
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: 'rgba(108,80,243,0.3)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(108,80,243,0)',
+                    },
+                  ],
+                  false
                 ),
                 shadowColor: 'rgba(108,80,243, 0.9)',
                 shadowBlur: 20,
               },
             },
-            data: [12,13,15,16,18,21],
+            data: [12, 13, 15, 16, 18, 21],
           },
           {   //绿色线
             name: '车位情况',
@@ -227,39 +233,44 @@ export default {
             areaStyle: {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(
-                    0,
-                    0,
-                    0,
-                    1,
-                    [
-                      {
-                        offset: 0,
-                        color: 'rgba(0,202,149,0.3)',
-                      },
-                      {
-                        offset: 1,
-                        color: 'rgba(0,202,149,0)',
-                      },
-                    ],
-                    false
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: 'rgba(0,202,149,0.3)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(0,202,149,0)',
+                    },
+                  ],
+                  false
                 ),
                 shadowColor: 'rgba(0,202,149, 0.9)',
                 shadowBlur: 20,
               },
             },
-            data: [10,14,12,19,15,16],
+            data: [10, 14, 12, 19, 15, 16],
           },
         ],
       };
       myChart.setOption(option);
     }
   },
-  mounted() {
+  mounted () {
+    var baseDate = +new Date((this.dottedBase -= 1000 * 3600 * 24 * 6));
+    for (var i = 0; i < 6; i++) {
+      var date = new Date((baseDate += 1000 * 3600 * 24));
+      date = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+      this.data.push(date);
+    }
     this.myEcharts();
   }
 }
 </script>
 
 <style scoped>
-
 </style>
